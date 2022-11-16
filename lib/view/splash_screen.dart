@@ -20,7 +20,10 @@ class SplashScreen extends StatelessWidget {
       //appBar: AppBar(),
       backgroundColor: R.colors.primary,
       body: Center(
-        child: Image.asset(R.assets.icSplash),
+        child: Image.asset(
+          R.assets.icSplash,
+          width: MediaQuery.of(context).size.width * 0.5,
+        ),
       ),
     );
   }
