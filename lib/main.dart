@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:soalatihan/view/login_page.dart';
+import 'package:soalatihan/view/main_page.dart';
+import 'package:soalatihan/view/register_page.dart';
 import 'package:soalatihan/view/splash_screen.dart';
 
 void main() {
@@ -32,7 +34,9 @@ class MyApp extends StatelessWidget {
         // "/": (context) => const SplashScreen(),
         // "/login": (context) => const LoginPage()
         "/": (context) => const SplashScreen(),
-        LoginPage.route: (context) => const LoginPage()
+        LoginPage.route: (context) => const LoginPage(),
+        RegisterPage.route: (context) => const RegisterPage(),
+        MainPage.route: (context) => const MainPage(),
       },
     );
   }
