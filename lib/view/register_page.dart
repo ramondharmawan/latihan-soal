@@ -56,7 +56,10 @@ class _RegisterPageState extends State<RegisterPage> {
           child: ButtonLogin(
             onTap: () {
               print(emailController.text);
-              Navigator.of(context).pushNamed(MainPage.route);
+              // Navigator.of(context).pushNamed(MainPage.route);
+              // ini diganti dibawah untuk menghilangkan tombol back iconTheme pada halaman home page, profile page dan chat page:
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil(MainPage.route, (context) => false);
             },
             backgroundColor: R.colors.primary,
             borderColor: R.colors.primary,
