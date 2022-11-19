@@ -78,7 +78,7 @@ class _MainPageState extends State<MainPage> {
                       child: Column(
                         children: [
                           Image.asset(
-                            R.assets.imgHome,
+                            R.assets.icHome,
                             height: 30,
                           ),
                           const Text("Home"),
@@ -99,7 +99,7 @@ class _MainPageState extends State<MainPage> {
                           Opacity(
                             opacity: 0,
                             child: Image.asset(
-                              R.assets.imgHome,
+                              R.assets.icHome,
                               height: 30,
                             ),
                           ),
@@ -125,7 +125,7 @@ class _MainPageState extends State<MainPage> {
                       child: Column(
                         children: const [
                           // Image.asset(
-                          //   R.assets.imgHome,
+                          //   R.assets.icHome,
                           //   height: 30,
                           // ),
                           Icon(

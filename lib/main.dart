@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:soalatihan/view/login_page.dart';
+import 'package:soalatihan/view/main/latihan_soal/mapel_page.dart';
 import 'package:soalatihan/view/main_page.dart';
 import 'package:soalatihan/view/register_page.dart';
 import 'package:soalatihan/view/splash_screen.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
         LoginPage.route: (context) => const LoginPage(),
         RegisterPage.route: (context) => const RegisterPage(),
         MainPage.route: (context) => const MainPage(),
+        MapelPage.route: (context) => const MapelPage(),
       },
     );
   }

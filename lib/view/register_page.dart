@@ -38,22 +38,27 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       backgroundColor: Color(0xfff0f3f5),
       // resizeToAvoidBottomInset: false, aktifkan ini jika spacer dibawah aktif dan remove widget SingleChildScrollView pada body
-      appBar: AppBar(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(25),
-            bottomRight: Radius.circular(25),
+      //preferredSize ini digunakan untuk merubah ketinggian appbar
+      appBar: PreferredSize(
+        // ktoolbarheight ini adalah ketinggian default dari appbar ini yang ditambah dengan ketinggian yang diinginkan
+        preferredSize: Size.fromHeight(kToolbarHeight + 40),
+        child: AppBar(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(25),
+              bottomRight: Radius.circular(25),
+            ),
           ),
-        ),
-        elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.black),
-        backgroundColor: Colors.white,
-        title: const Text(
-          'Yuk isi data diri!',
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.w700,
-            fontSize: 18,
+          elevation: 0,
+          iconTheme: const IconThemeData(color: Colors.black),
+          backgroundColor: Colors.white,
+          title: const Text(
+            'Yuk isi data diri!',
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.w700,
+              fontSize: 18,
+            ),
           ),
         ),
       ),
