@@ -36,8 +36,15 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xfff0f3f5),
       // resizeToAvoidBottomInset: false, aktifkan ini jika spacer dibawah aktif dan remove widget SingleChildScrollView pada body
       appBar: AppBar(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(25),
+            bottomRight: Radius.circular(25),
+          ),
+        ),
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,

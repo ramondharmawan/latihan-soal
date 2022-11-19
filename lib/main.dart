@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:soalatihan/view/login_page.dart';
 import 'package:soalatihan/view/main_page.dart';
 import 'package:soalatihan/view/register_page.dart';
@@ -17,6 +18,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+        //dibawah ini penggunaan google fonts secara global dengan fonts tertentu eg. poppins
+        textTheme: GoogleFonts.poppinsTextTheme(),
         // This is the theme of your application.
         //
         // Try running your application with "flutter run". You'll see the
