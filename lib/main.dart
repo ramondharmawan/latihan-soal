@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:soalatihan/view/login_page.dart';
 import 'package:soalatihan/view/main/latihan_soal/mapel_page.dart';
+import 'package:soalatihan/view/main/latihan_soal/paket_soal_page.dart';
 import 'package:soalatihan/view/main_page.dart';
 import 'package:soalatihan/view/register_page.dart';
 import 'package:soalatihan/view/splash_screen.dart';
+
+import 'constants/r.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,10 +20,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Latihan Soal',
       theme: ThemeData(
         //dibawah ini penggunaan google fonts secara global dengan fonts tertentu eg. poppins
         textTheme: GoogleFonts.poppinsTextTheme(),
+        appBarTheme: AppBarTheme(
+          backgroundColor: R.colors.primary,
+        ),
         // This is the theme of your application.
         //
         // Try running your application with "flutter run". You'll see the
@@ -42,6 +48,7 @@ class MyApp extends StatelessWidget {
         RegisterPage.route: (context) => const RegisterPage(),
         MainPage.route: (context) => const MainPage(),
         MapelPage.route: (context) => const MapelPage(),
+        PaketSoalPage.route: (context) => const PaketSoalPage(),
       },
     );
   }

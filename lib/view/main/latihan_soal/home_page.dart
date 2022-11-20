@@ -31,40 +31,45 @@ class _HomePageState extends State<HomePage> {
             MapelWidget(),
             MapelWidget(),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
+              // margin: EdgeInsets.symmetric(horizontal: 20),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Text(
-                        'Terbaru',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      'Terbaru',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                       ),
-                      // Spacer(),
-                    ],
+                    ),
                   ),
+                  SizedBox(height: 10),
                   Container(
-                    height: 170,
+                    height: 150,
                     child: ListView.builder(
                       itemCount: 5,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: ((context, index) {
-                        return Image.asset(R.assets.bannerHome);
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 20.0),
+                          child: Image.asset(R.assets.bannerHome),
+                        );
                       }),
                     ),
                   ),
                 ],
               ),
             ),
+            SizedBox(height: 35),
           ],
         ),
       ),
     );
   }
 
+// yang ada namanya _ ini adalaha extract method, extract method digunakan jika komponen ini digunakan sekali saja / 1 halaman saja
   Container _buildHomeListMapel() {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 21),
@@ -196,7 +201,7 @@ class MapelWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
       ),
       margin: EdgeInsets.fromLTRB(20, 0, 20, 10),
-      padding: EdgeInsets.symmetric(horizontal: 18, vertical: 21),
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 21),
       child: Row(
         children: [
           Container(
