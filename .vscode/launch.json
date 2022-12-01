@@ -7,7 +7,8 @@
         {
             "name": "soalatihan",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            // "deviceId": "Chrome",
         },
         {
             "name": "soalatihan (profile mode)",
