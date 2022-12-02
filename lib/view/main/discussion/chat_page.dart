@@ -15,62 +15,107 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   final textController = TextEditingController();
+
+  late CollectionReference chat;
+  late QuerySnapshot chatData;
+  // late List<QueryDocumentSnapshot> listChat;
+  // List<QueryDocumentSnapshot>? listChat;
+
+  // getDataFromFirebase() async {
+  //   chatData = await FirebaseFirestore.instance
+  //       .collection("room")
+  //       .doc("kimia")
+  //       .collection("chat")
+  //       .get();
+  //   // listChat = chatData.docs;
+  //   // print(chatData.docs);
+  //   setState(() {});
+  // }
+
+  @override
+  void initState() {
+    super.initState();
+    // getDataFromFirebase();
+  }
+
   @override
   Widget build(BuildContext context) {
-    CollectionReference chat = FirebaseFirestore.instance
+    // ---------- ini dipindah ke bawah, tanpa collectionReference chat ---
+    // CollectionReference chat = FirebaseFirestore.instance
+    //     .collection("room")
+    //     .doc("kimia")
+    //     .collection("chat");
+    // ------------- end function ambil data dari database ---
+    chat = FirebaseFirestore.instance
         .collection("room")
         .doc("kimia")
         .collection("chat");
+    final user = FirebaseAuth.instance.currentUser!;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Diskusi Soal'),
+        title: const Text('Diskusi Soal'),
       ),
       body: Column(
         children: [
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ListView.builder(
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    margin: EdgeInsets.only(bottom: 10),
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Nama User',
-                          style: TextStyle(
-                            fontSize: 10,
-                            color: Color(0xff5200ff),
+                padding: const EdgeInsets.all(8.0),
+                child:
+                    // listChat == null
+                    //     ? const CircularProgressIndicator()
+                    //     :
+                    StreamBuilder<QuerySnapshot>(
+                  stream: chat.orderBy('time').snapshots(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot<Object?>> snapshot) {
+                    if (!snapshot.hasData) {
+                      return const CircularProgressIndicator();
+                    }
+                    return ListView.builder(
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final currentChat = snapshot.data!.docs[index];
+                        return Container(
+                          margin: const EdgeInsets.only(bottom: 10),
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                currentChat['nama'],
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  color: Color(0xff5200ff),
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 4),
+                                decoration: BoxDecoration(
+                                  color: Color(0xffffdcdc),
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(10),
+                                    bottomRight: Radius.circular(10),
+                                    topRight: Radius.circular(10),
+                                  ),
+                                ),
+                                child: Text(currentChat['content']),
+                              ),
+                              Text(
+                                "waktu",
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  color: R.colors.greySubtitleHome,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                        Container(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                          decoration: BoxDecoration(
-                            color: Color(0xffffdcdc),
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(10),
-                              bottomRight: Radius.circular(10),
-                              topRight: Radius.circular(10),
-                            ),
-                          ),
-                          child: Text('Pesan'),
-                        ),
-                        Text(
-                          'Menit',
-                          style: TextStyle(
-                            fontSize: 10,
-                            color: R.colors.greySubtitleHome,
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
+                        );
+                      },
+                    );
+                  },
+                )),
           ),
           SafeArea(
             child: Container(
@@ -129,7 +174,8 @@ class _ChatPageState extends State<ChatPage> {
                         return;
                       }
                       print(textController.text);
-                      final user = FirebaseAuth.instance.currentUser!;
+                      // final user dipindahkan keatas
+                      // final user = FirebaseAuth.instance.currentUser!;
                       final chatContent = {
                         "nama": user.displayName,
                         "uid": user.uid,
@@ -138,7 +184,10 @@ class _ChatPageState extends State<ChatPage> {
                         "photo": user.photoURL,
                         "time": FieldValue.serverTimestamp(),
                       };
-                      chat.add(chatContent);
+                      chat.add(chatContent).whenComplete(() {
+                        // getDataFromFirebase();
+                        textController.clear();
+                      });
                     },
                     icon: Icon(
                       Icons.send,
