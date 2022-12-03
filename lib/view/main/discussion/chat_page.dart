@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:intl/intl.dart';
 
 import '../../../constants/r.dart';
 
@@ -73,14 +74,20 @@ class _ChatPageState extends State<ChatPage> {
                       return const CircularProgressIndicator();
                     }
                     return ListView.builder(
-                      itemCount: snapshot.data!.docs.length,
+                      itemCount: snapshot.data!.docs.reversed.length,
+                      reverse: true,
                       itemBuilder: (BuildContext context, int index) {
-                        final currentChat = snapshot.data!.docs[index];
+                        final currentChat =
+                            snapshot.data!.docs.reversed.toList()[index];
+                        final currentDate =
+                            (currentChat['time'] as Timestamp?)?.toDate();
                         return Container(
                           margin: const EdgeInsets.only(bottom: 10),
                           width: MediaQuery.of(context).size.width * 0.8,
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: user.uid == currentChat['uid']
+                                ? CrossAxisAlignment.end
+                                : CrossAxisAlignment.start,
                             children: [
                               Text(
                                 currentChat['nama'],
@@ -93,17 +100,29 @@ class _ChatPageState extends State<ChatPage> {
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 4),
                                 decoration: BoxDecoration(
-                                  color: Color(0xffffdcdc),
+                                  color: user.uid == currentChat['uid']
+                                      ? Colors.green.withOpacity(0.5)
+                                      : Color(0xffffdcdc),
                                   borderRadius: BorderRadius.only(
                                     bottomLeft: Radius.circular(10),
-                                    bottomRight: Radius.circular(10),
+                                    bottomRight: user.uid == currentChat['uid']
+                                        ? Radius.circular(0)
+                                        : Radius.circular(10),
                                     topRight: Radius.circular(10),
+                                    topLeft: user.uid != currentChat['uid']
+                                        ? Radius.circular(0)
+                                        : Radius.circular(10),
                                   ),
                                 ),
-                                child: Text(currentChat['content']),
+                                child: Text(
+                                  currentChat['content'],
+                                ),
                               ),
                               Text(
-                                "waktu",
+                                currentDate == null
+                                    ? ""
+                                    : DateFormat("dd-MMM-yyy HH:mm")
+                                        .format(currentDate),
                                 style: TextStyle(
                                   fontSize: 10,
                                   color: R.colors.greySubtitleHome,
@@ -182,6 +201,7 @@ class _ChatPageState extends State<ChatPage> {
                         "content": textController.text,
                         "email": user.email,
                         "photo": user.photoURL,
+                        "file_url": "user.photoURL",
                         "time": FieldValue.serverTimestamp(),
                       };
                       chat.add(chatContent).whenComplete(() {
